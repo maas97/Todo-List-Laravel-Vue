@@ -4,13 +4,9 @@ import {createApp} from 'vue';
 import * as VueRouter from 'vue-router'
 
 import ShowTasksComponent from './components/ShowTasksComponent.vue'
-import AddTaskComponent from './components/AddTaskComponent.vue'
-import EditTaskComponent from './components/EditTaskComponent.vue'
 
 const routes = [
     {path: '/', component:ShowTasksComponent },
-    {path: '/add', component:AddTaskComponent },
-    {path: '/edit', component:EditTaskComponent }
 ]
 
 const router = VueRouter.createRouter({

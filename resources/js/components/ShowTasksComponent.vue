@@ -15,13 +15,22 @@
                         </div>
                     </div>
                     <div class="card-body">
-                        <div class="table-responsive">
+                        <div class="table-responsive  overflow-x-hidden">
                             <table class="table">
                                 <tbody>
                                     <tr v-for="(task,index) in tasks" :key="index" class="m-5">
                                         <td>{{ index+1 }}</td>
                                         <td > <button @click="editTask(task)" class="btn">{{ task.Title }}</button> </td>
-                                        <td class="btn btn-danger bg-danger text-light float-end btn-sm">{{ task.Date }}</td>
+                                        <td class="text-light float-end">
+                                            <button type="button" class="btn btn-danger btn-sm position-relative">
+                                                {{ task.Date }}
+                                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                                >
+                                                <span class="visually-hidden">unread messages</span>
+                                            </span>
+                                            </button>
+                                        </td>
+                                        <td class=" float-end"><button @click="removeTask(task)" class="btn btn-danger btn-sm">Delete</button></td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -33,14 +42,15 @@
 
         <!-- Modal -->
 <div class="modal fade" id="taskModal" tabindex="-1" aria-labelledby="taskModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered modal-md">
+  <div :class="`modal-dialog modal-dialog-centered ${!deleteMode ? modal-md : modal-sm }`">
     <div class="modal-content">
       <div class="modal-header bg-primary">
-        <h1 class="modal-title fs-5 text-light" id="taskModalLabel">{{ !editMode ?  'Add Task' : 'Edit TODO'  }}</h1>
+        <h1 class="modal-title fs-5 text-light" id="taskModalLabel" v-show="!deleteMode">{{ !editMode ?  'Add Task' : 'Edit TODO'  }}</h1>
+        <h1 class="modal-title fs-5 text-light" id="taskModalLabel" v-show="deleteMode">Delete Task</h1>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <div class="row">
+        <div class="row" v-show="!deleteMode">
             <div class="col-md-12">
                 <div class="form-group mb-4">
                     <input type="text" class="form-control" placeholder="Write Task Title" v-model="taskData.title">
@@ -53,12 +63,16 @@
                     <input type="text" class="form-control" placeholder="Due Date Ex: 2023-09-25" v-model="taskData.date">
                     <span class="text-danger" v-show="taskErrors.date">Date is required</span>
                 </div>
-            </div>
-            
+            </div>  
         </div>
+        <h5 class="text-center" v-show="deleteMode">Are you sure you want to delete this task</h5>
       </div>
-      <div class="modal-footer">
+      <div class="modal-footer" v-show="!deleteMode">
         <button type="button" @click="!editMode ? storeTask() : updateTask()" class="btn btn-primary">{{ !editMode ? 'Submit Task' : 'SAVE'  }} </button>
+      </div>
+      <div class="modal-footer" v-show="deleteMode">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" @click="deleteTask()" class="btn btn-danger">Delete Task </button>
       </div>
     </div>
   </div>
@@ -80,6 +94,7 @@ export default {
     data(){
         return {
             editMode:false,
+            deleteMode:false,
             taskData:{
                 id: '',
                 title: '',
@@ -105,13 +120,29 @@ export default {
                 // console.log(err.response.data);
             });
         },
+        deleteTask(){
+            axios.delete( '/api/task/' + this.taskData.id).then(response =>{
+                    // console.log( response.data);
+                    this.getTasks()
+                }).catch(err =>{
+                    // console.log(err.response.data)
+                }).finally(()=>{
+                    $('#taskModal').modal('hide');
+                })
+        },
+        removeTask(task){
+            this.deleteMode =true;
+            this.taskData.id = task.id;
+            $('#taskModal').modal('show');
+
+        },
         updateTask(){
             this.taskData.title == '' ? this.taskErrors.title = true : this.taskErrors.title = false
             this.taskData.date == '' ? this.taskErrors.date = true : this.taskErrors.date = false
         
             if(this.taskData.title && this.taskData.date){
-                console.log(this.taskData.id)
-                console.log(this.taskData)
+                // console.log(this.taskData.id)
+                // console.log(this.taskData)
                 axios.put( '/api/task/' + this.taskData.id ,this.taskData).then(response =>{
                     // console.log( response.data);
                     this.getTasks()
@@ -124,6 +155,7 @@ export default {
         },
         editTask(task){
             this.editMode = true;
+            this.deleteMode = false;
             this.taskData={
                 id: task.id,
                 title: task.Title,
@@ -138,6 +170,7 @@ export default {
         }
         ,createTask(){
             this.editMode = false;
+            this.deleteMode = false;
             this.taskData={
                 id: '',
                 title: '',
