@@ -3,6 +3,10 @@ This App is made with Laravel Vue.js
 
 If you are Cloning it From Github :
 
+```bash
+Git clone https://github.com/maas97/Todo-List-Laravel-Vue.git
+```
+
 1- In the .env File Make Sure DB name is Correct and Everything is Fine and the Database exists ;
 
 2-Install the Needed Packages :
