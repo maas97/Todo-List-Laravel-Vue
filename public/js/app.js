@@ -35274,9 +35274,9 @@ __webpack_require__.r(__webpack_exports__);
       if (this.taskData.title && this.taskData.date) {
         axios__WEBPACK_IMPORTED_MODULE_0__["default"].post('/api/task/store', this.taskData).then(function (response) {
           _this4.getTasks();
-          console.log(response.data);
+          // console.log(response.data);
         })["catch"](function (err) {
-          console.log(err.response.data);
+          // console.log(err.response.data);
         })["finally"](function () {
           $('#taskModal').modal('hide');
         });
@@ -35290,7 +35290,7 @@ __webpack_require__.r(__webpack_exports__);
             t.getTasks();
             t.taskData = response.data;
           })["catch"](function (errors) {
-            console.log(errors);
+            // console.log(errors);
           });
         }, 500);
       }
@@ -35303,7 +35303,7 @@ __webpack_require__.r(__webpack_exports__);
             t.getTasks();
             t.taskData = response.data;
           })["catch"](function (errors) {
-            console.log(errors);
+            // console.log(errors);
           });
         }, 500);
       }

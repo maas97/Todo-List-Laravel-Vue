@@ -195,9 +195,9 @@ export default {
             if(this.taskData.title && this.taskData.date){
                 axios.post( '/api/task/store', this.taskData).then(response =>{
                     this.getTasks()
-                    console.log(response.data)
+                    // console.log(response.data)
                 }).catch(err =>{
-                    console.log(err.response.data)
+                    // console.log(err.response.data)
                 }).finally(()=>{
                     $('#taskModal').modal('hide');
                 })
@@ -212,7 +212,7 @@ export default {
                         t.getTasks()
                         t.taskData = response.data
                     }).catch(errors => {
-                        console.log(errors)
+                        // console.log(errors)
                     });
                 }, 500);
             }
@@ -225,7 +225,7 @@ export default {
                         t.getTasks()
                         t.taskData = response.data
                     }).catch(errors => {
-                        console.log(errors)
+                        // console.log(errors)
                     });
                 }, 500);
             }
