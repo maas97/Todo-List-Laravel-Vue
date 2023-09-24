@@ -26,7 +26,7 @@ composer dump-autoload
   php artisan key:generate
 ```
 
-4- Rename the .Env.Example to .Env and Make Sure DB name is Correct with your user and password DB information;
+4- In the .Env, Make Sure DB name is Correct with your user and password DB information;
 
 5- If the Database is Empty Migrate the Tables :
 
