@@ -15,7 +15,19 @@
     </head>
     <body class="antialiased">
         <div id="app">
+            
             <show-tasks></show-tasks>
+            <ul class="navbar-nav float-end mt-2 mx-5 mb-lg-0">
+                        <li class="nav-item">
+                            <a href="{{route('logout')}}" class="nav-link p-2 bg-info" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                Logout
+                            </a>
+
+                            <form id="logout-form" action="{{route('logout')}}" method="POST">
+                                @csrf
+                            </form>
+                        </li>
+                    </ul>
         </div>
 
         <script src="{{asset('js/app.js')}}"></script>

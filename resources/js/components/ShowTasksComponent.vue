@@ -11,6 +11,7 @@
                             <div class="col-md-6 ">
                                 <button @click="createTask" class="btn btn-primary btn-sm float-end"> Add Task</button>
                             </div>
+                            
                         </div>
                     </div>
                     <div class="card-body">
