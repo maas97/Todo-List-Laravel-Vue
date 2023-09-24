@@ -103,4 +103,24 @@ class TaskController extends Controller
 
         return "Task not found";
     }
+
+    public function markAsComplete($id)
+    {
+        $current_task = Task::find($id);
+        Task::where('id', $id)->update([
+            'Completed'    => 1,
+        ]);
+        $current_task = Task::where('id', $current_task->id)->get();
+        return response()->json($current_task);
+    }
+
+    public function markAsIncomplete($id)
+    {
+        $current_task = Task::find($id);
+        Task::where('id', $id)->update([
+            'Completed'    => 0,
+        ]);
+        $current_task = Task::where('id', $current_task->id)->get();
+        return response()->json($current_task);
+    }
 }

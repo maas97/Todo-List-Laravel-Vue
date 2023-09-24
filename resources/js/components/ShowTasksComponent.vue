@@ -9,26 +9,31 @@
                                 <h5 class="float-start">{{ title }}</h5>
                             </div>
                             <div class="col-md-6 ">
-                                <button @click="createTask" class="btn btn-primary btn-sm float-end"> Add Task</button>
+                                <button @click="createTask" class="btn btn-primary btn-sm float-end"><fa icon="plus"/> Add Task</button>
                             </div>
                             
                         </div>
                     </div>
-                    <div class="card-body">
-                        <div class="table-responsive  overflow-x-hidden">
-                            <table class="table">
+                    <div class="card-body d-flex align-content-bottom justify-content-around ">
+                        <div class="table-responsive  overflow-x-hidden d-flex align-content-end justify-content-around w-100">
+                            <table class="table ">
                                 <tbody>
-                                    <tr v-for="(task,index) in tasks" :key="index" class="m-5">
-                                        <td>{{ index+1 }}</td>
+                                    <tr v-for="(task,index) in tasks" :key="index" class="m-5 p-5" >
+                                        <td>
+                                            <button class="btn btn-success btn-sm mx-1" v-if="task.Completed == 0" @click="markAsComplete(task)">Mark As Complete</button>
+                                            <button class="btn btn-warning btn-sm mx-1" v-if="task.Completed == 1" @click="markAsIncomplete(task)">Mark As Incomplete</button>
+                                        </td>
                                         <td > <button @click="editTask(task)" class="btn">{{ task.Title }}</button> </td>
                                         <td class="text-light float-end">
-                                            <button type="button" class="btn btn-danger btn-sm position-relative">
-                                                {{ task.Date }}
-                                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                                                >
-                                                <span class="visually-hidden">unread messages</span>
+                                            <span type="badge" class="btn btn-danger btn-sm position-relative" v-if="task.Completed == 0">
+                                                {{ task.Date }}                        
                                             </span>
-                                            </button>
+                                            <span type="badge" class="btn btn-success btn-sm position-relative" v-if="task.Completed == 1">
+                                                {{ task.Date }}
+                                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-success">
+                                                <fa icon="check"/>
+                                            </span>
+                                            </span>
                                         </td>
                                         <td class=" float-end"><button @click="removeTask(task)" class="btn btn-danger btn-sm">Delete</button></td>
                                     </tr>
@@ -65,7 +70,7 @@
                 </div>
             </div>  
         </div>
-        <h5 class="text-center" v-show="deleteMode">Are you sure you want to delete this task</h5>
+        <h5 class="text-center" v-show="deleteMode">Are you sure you want to delete this task ?</h5>
       </div>
       <div class="modal-footer" v-show="!deleteMode">
         <button type="button" @click="!editMode ? storeTask() : updateTask()" class="btn btn-primary">{{ !editMode ? 'Submit Task' : 'SAVE'  }} </button>
@@ -197,7 +202,34 @@ export default {
                     $('#taskModal').modal('hide');
                 })
             }
-        }
+        },
+
+        markAsComplete(task) {
+            if(confirm('Are you sure you want to mark this task as complete?')) {
+                const t = this
+                setTimeout(function() {
+                    axios.post('/api/markAsComplete/' + task.id, t.taskData).then(response => {
+                        t.getTasks()
+                        t.taskData = response.data
+                    }).catch(errors => {
+                        console.log(errors)
+                    });
+                }, 500);
+            }
+        },
+        markAsIncomplete(task) {
+            if(confirm('Are you sure you want to mark this task as incomplete?')) {
+                const t = this
+                setTimeout(function() {
+                    axios.post('/api/markAsIncomplete/' + task.id, t.taskData).then(response => {
+                        t.getTasks()
+                        t.taskData = response.data
+                    }).catch(errors => {
+                        console.log(errors)
+                    });
+                }, 500);
+            }
+        },
     }
 }
 

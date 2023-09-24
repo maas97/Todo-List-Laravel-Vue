@@ -23,6 +23,8 @@ Route::get('/tasks' , [TaskController::class , 'index'])->name(name:'tasks.index
 Route::prefix('task')->group( function(){
         Route::post('store', [TaskController::class, 'store'])->name(name:'tasks.store');
         Route::put('/{id}', [TaskController::class, 'update'])->name(name:'tasks.update');
-        Route::put('/{id}/completed', [TaskController::class, 'completed'])->name(name:'tasks.completed');
         Route::delete('/{id}', [TaskController::class, 'destroy'])->name(name:'tasks.destroy');
 });
+
+Route::post('markAsComplete/{id}', [TaskController::class, 'markAsComplete']);
+Route::post('markAsIncomplete/{id}', [TaskController::class, 'markAsIncomplete']);
