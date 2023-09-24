@@ -1,4 +1,4 @@
-## Welcome to Todo List App
+## Welcome to Todo-List App
 This App is made with Laravel Vue.js
 
 If you are Cloning it From Github :
@@ -12,7 +12,7 @@ Git clone https://github.com/maas97/Todo-List-Laravel-Vue.git
 2-Install the Needed Packages :
 
 ```bash
- composer install
+ composer update
 ```
 composer dump-autoload
 [ If needed ]
@@ -20,8 +20,15 @@ composer dump-autoload
 ```bash
  npm install
 ```
+3- Generate the Key For the App :
 
-3- If the Database is Empty Migrate the Tables :
+```bash
+  php artisan key:generate
+```
+
+4- Rename the .Env.Example to .Env and Make Sure DB name is Correct with your user and password DB information;
+
+5- If the Database is Empty Migrate the Tables :
 
 ```bash
   php artisan migrate
@@ -31,8 +38,9 @@ composer dump-autoload
   php artisan migrate:fresh
 ```
 
-4- To run The Server  
+6- To run The Server  
 
 ```bash
   php artisan serve
 ```
+It'll open a Login Page, Please Register a new user first and it'll redirect you to home page
