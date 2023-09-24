@@ -1,4 +1,5 @@
-## The ".env" File is Removed From the GitIgnore file
+## Welcome to Todo List App
+This App is made with Laravel Vue.js
 
 If you are Cloning it From Github :
 
