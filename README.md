@@ -26,9 +26,7 @@ composer dump-autoload
   php artisan key:generate
 ```
 
-4- In the .Env, Make Sure DB name is Correct with your user and password DB information;
-
-5- If the Database is Empty Migrate the Tables :
+4- If the Database is Empty Migrate the Tables :
 
 ```bash
   php artisan migrate
@@ -38,9 +36,9 @@ composer dump-autoload
   php artisan migrate:fresh
 ```
 
-6- To run The Server  
+5- To run The Server  
 
 ```bash
   php artisan serve
 ```
-It'll open a Login Page, Please Register a new user first and it'll redirect you to home page
+It'll open a Login Page, Please Register a new user first and it'll redirect you to home page;
